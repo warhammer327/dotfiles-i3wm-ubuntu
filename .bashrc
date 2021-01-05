@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='[${debian_chroot:+($debian_chroot)}\A]\033[01;32m\]\033[00m\]\033[01;34m\]\033[34m\][\w\$]\n\033[33m\]$\033[32m\]'
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\[\033[00m\]\[\033[01;34m\][\w]\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -87,6 +87,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# some more ls aliases
 #aliases
 alias ll='la -alF'
 alias la='ls -A'
@@ -94,16 +95,18 @@ alias l='ls -a'
 alias python='python3'
 alias pip='pip3'
 alias pa='cd Projects/Academic/'
-alias pp='cd Projects/Pets/'
+alias pp='cd projects/pets/'
 alias pavjudge='source Projects/Academic/Virtual-Judge/env1/bin/activate && cd Projects/Academic/Virtual-Judge/fproject' 
-alias mocp='mocp -T solarized'
-alias gdef='googler -l en -n 5 define'
-alias gs='googler -l en -n 6 en'
 alias r='ranger'
 alias yt='youtube-dl'
 alias ff='clear'
 alias sa='sudo apt'
-
+alias ~='cd /home/warhammer'
+alias ..='cd ..'
+alias update='sudo apt update && sudo apt upgrade'
+alias vi='vim'
+alias shellreboot='killall -SIGQUIT gnome-shell'
+alias rtv='rtv --enable-media'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -128,9 +131,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/wrhmmr327/.sdkman"
-[[ -s "/home/wrhmmr327/.sdkman/bin/sdkman-init.sh" ]] && source "/home/wrhmmr327/.sdkman/bin/sdkman-init.sh"
 
