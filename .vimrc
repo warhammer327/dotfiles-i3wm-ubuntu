@@ -1,12 +1,15 @@
 set nocompatible
 filetype on  
 
+
+map <F8> :w <CR> :!g++ % -o %< && printf '\e[1;32m%-Compiled Successfully\e[m' <CR>:vert term ./%<<CR>
+map <F7> :w <CR> :vert term ./%< <CR> 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Add plugins here
-Plugin 'altercation/vim-colors-solarized'
+
 Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
@@ -15,29 +18,50 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'amiorin/vim-project'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
 
-" Optional:
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-python/python-syntax' 
 Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'octol/vim-cpp-enhanced-highlight'	
 
 call vundle#end()
 filetype plugin indent on
 
+"emmet-vim settings
+let g:user_emmet_leader_key='.'
+
+"Ulti-snips settings
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+"NERDTree settings
 let g:project_use_nerdtree = 1
 set rtp+=~/.vim/bundle/vim-project/
 " custom starting path
 call project#rc("~/projects")
 Project '~/projects/pets/bohubrihi_first_project/first_project' , 'first_project'
+Project '~/projects/pets/Shunnoek' , 'ShunnoEk'
 " default starting path (the home directory)
 call project#rc()
 
 
-
+syntax on
+set shiftwidth=4
+set nospell
 set number
 set laststatus=2
 set ruler
-syntax on
 set cindent
 set wildmenu
 set mouse=a
@@ -45,11 +69,12 @@ set statusline+=%F
 set showcmd
 set tabstop=4
 set expandtab
+set nowrap
 
-
+autocmd BufWinEnter * NERDTreeMirror
 autocmd VimEnter * NERDTree | wincmd p
 autocmd BufNewFile *.cpp 0r ~/.vim/templates/problemsolving.cpp
-
+autocmd BufNewFile *.html 0r ~/.vim/templates/standard.html
 
 "settings for syntastic
 set statusline+=%#warningmsg#
@@ -60,3 +85,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+"setting for python-syntax
+let g:python_highlight_all = 1
