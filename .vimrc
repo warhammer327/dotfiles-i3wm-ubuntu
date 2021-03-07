@@ -2,8 +2,11 @@ set nocompatible
 filetype on  
 
 
-map <F8> :w <CR> :!g++ % -o %< && printf '\e[1;32m%-Compiled Successfully\e[m' <CR>:vert term ./%<<CR>
-map <F7> :w <CR> :vert term ./%< <CR> 
+map <F8> :w <CR> :!g++ % -o %< && printf '\e[1;32m%-Compiled Successfully\e[m' <CR> :vert term ./%< <CR>
+map <F5> :w <CR> :!g++ % -o %< && ./%< <CR>
+map NN :NERDTreeToggle<CR>
+map OO :vsplit 01output.txt<CR>:vertical resize -20<CR>
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
@@ -12,13 +15,13 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'Raimondi/delimitMate'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'amiorin/vim-project'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-
+Plugin 'morhetz/gruvbox'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-python/python-syntax' 
 Plugin 'honza/vim-snippets'
@@ -39,7 +42,7 @@ let g:user_emmet_leader_key='.'
 " - https://github.com/Valloric/YouCompleteMe
 " - https://github.com/nvim-lua/completion-nvim
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -60,21 +63,31 @@ syntax on
 set shiftwidth=4
 set nospell
 set number
-set laststatus=2
+set list listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 set ruler
 set cindent
-set wildmenu
+set wildmode=longest,list,full
 set mouse=a
 set statusline+=%F
 set showcmd
 set tabstop=4
 set expandtab
-set nowrap
+set linebreak
+set wrap
+set autoread | au CursorHold * checktime | call feedkeys("lh")
+set splitright
 
 autocmd BufWinEnter * NERDTreeMirror
 autocmd VimEnter * NERDTree | wincmd p
-autocmd BufNewFile *.cpp 0r ~/.vim/templates/problemsolving.cpp
+autocmd BufNewFile *.cpp 0r ~/.vim/templates/ctemplate.cpp
 autocmd BufNewFile *.html 0r ~/.vim/templates/standard.html
+
+"non breaking space setting
+augroup RemoveSpaces
+  autocmd!
+  autocmd BufWritePre *.cpp silent! :%s/\%u00A0/ /g
+augroup end
+
 
 "settings for syntastic
 set statusline+=%#warningmsg#
