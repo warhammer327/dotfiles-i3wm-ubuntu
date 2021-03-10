@@ -29,7 +29,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
-Plugin 'octol/vim-cpp-enhanced-highlight'	
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'vim-scripts/AutoComplPop'
 
 call vundle#end()
 filetype plugin indent on
@@ -63,7 +64,7 @@ syntax on
 set shiftwidth=4
 set nospell
 set number
-set list listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
+"set list listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 set ruler
 set cindent
 set wildmode=longest,list,full
@@ -76,6 +77,8 @@ set linebreak
 set wrap
 set autoread | au CursorHold * checktime | call feedkeys("lh")
 set splitright
+set completeopt=menuone,longest,preview,popup
+set shortmess+=c "does not show match at the bottom
 
 autocmd BufWinEnter * NERDTreeMirror
 autocmd VimEnter * NERDTree | wincmd p
